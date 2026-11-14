@@ -1,0 +1,120 @@
+name: Publish reviews
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      announce_slug:
+        description: 'Optional: slug of an existing review to announce (leave blank for deploy only)'
+        required: false
+        default: ''
+        type: string
+      narrate_slug:
+        description: 'Optional review slug to generate ElevenLabs narration for (uses your API credits)'
+        required: false
+        default: ''
+        type: string
+      confirm_tts_cost:
+        description: 'Required when narrate_slug is entered: consent to spending ElevenLabs credits'
+        required: false
+        default: false
+        type: boolean
+      regenerate_audio:
+        description: 'Re-generate existing narration (will spend credits again)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "github-pages"
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install site dependencies
+        run: pip install -r requirements.txt
+      - name: Run project tests
+        run: python -m unittest discover -s tests -v
+      - name: Generate opted-in ElevenLabs narration
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ vars.ELEVENLABS_VOICE_ID }}
+          ELEVENLABS_MODEL_ID: ${{ vars.ELEVENLABS_MODEL_ID }}
+          MANUAL_NARRATE_SLUG: ${{ inputs.narrate_slug }}
+          CONFIRM_TTS_COST: ${{ inputs.confirm_tts_cost }}
+          REGENERATE_AUDIO: ${{ inputs.regenerate_audio }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          GITHUB_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          if [ -n "$MANUAL_NARRATE_SLUG" ]; then
+            if [ "$CONFIRM_TTS_COST" != "true" ]; then
+              echo "To generate paid narration, check confirm_tts_cost when running the workflow." >&2
+              exit 1
+            fi
+            if [ "$REGENERATE_AUDIO" = "true" ]; then
+              python scripts/narrate.py --slug "$MANUAL_NARRATE_SLUG" --force
+            else
+              python scripts/narrate.py --slug "$MANUAL_NARRATE_SLUG"
+            fi
+          elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            python scripts/narrate.py --new-publications
+          fi
+      - name: Preserve generated MP3 in repository
+        shell: bash
+        run: |
+          git add -A -- assets/audio/
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Add review narration [skip ci]"
+            git push origin HEAD:main
+          fi
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Build static website
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: python scripts/build.py
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Announce newly published reviews on Discord
+        if: github.event_name == 'push' || inputs.announce_slug != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          DEPLOYED_URL: ${{ steps.deployment.outputs.page_url }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          GITHUB_SHA: ${{ github.sha }}
+          DISCORD_FORUM_MODE: ${{ vars.DISCORD_FORUM_MODE }}
+          MANUAL_ANNOUNCE_SLUG: ${{ inputs.announce_slug }}
+        run: |
+          if [ -n "$MANUAL_ANNOUNCE_SLUG" ]; then
+            python scripts/announce.py --slug "$MANUAL_ANNOUNCE_SLUG"
+          else
+            python scripts/announce.py
+          fi
