@@ -278,7 +278,6 @@ def main():
                  '--', '.narration-requests/'], cwd=ROOT, text=True)
             marker_paths = changed.splitlines()
         preflight = any(p.startswith('.narration-requests/preflight-') and p.endswith('.txt') for p in marker_paths)
-                        for p in marker_paths)
         if preflight:
             if not os.getenv('ELEVENLABS_API_KEY') or not os.getenv('ELEVENLABS_VOICE_ID'):
                 raise RuntimeError('ElevenLabs API key or voice ID missing from GitHub Actions')
