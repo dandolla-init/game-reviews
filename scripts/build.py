@@ -247,7 +247,7 @@ def render_media(post, base):
     else:
         video_inner = '<p class="media-pending">Video essay to follow.</p>'
     return f'''<section class="companion-section" aria-label="Other ways to experience this review">
-      <div class="companion-card"><div class="eyebrow">01 / LISTEN</div><h2>Audio narration</h2><p>Hear the review read aloud by dandolla.</p>{audio_inner}</div>
+      <div class="companion-card"><div class="eyebrow">01 / LISTEN</div><h2>Audio narration</h2><p>Hear the review read aloud.</p>{audio_inner}</div>
       <div class="companion-card"><div class="eyebrow">02 / WATCH</div><h2>Video review</h2><p>Watch the companion video on YouTube.</p>{video_inner}</div>
     </section>'''
 

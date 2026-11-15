@@ -291,12 +291,15 @@ def main():
             print('PREFLIGHT_COMPLETE_NO_CREDITS_USED')
         approved = []
         for item in marker_paths:
-            matched = item.removeprefix('.narration-requests/').removesuffix('.approved') if item.startswith('.narration-requests/') and item.endswith('.approved') else None
-            if matched in ('danganronpa-trigger-happy-havoc', 'signalis-alatyr'):
+            # Accept a versioned retry marker, but never automatically
+            # regenerate an MP3 that already exists.
+            name = item.removeprefix('.narration-requests/') if item.startswith('.narration-requests/') else ''
+            matched = re.fullmatch(r'(danganronpa-trigger-happy-havoc|signalis-alatyr)(?:-retry-[0-9]+)?\.approved', name)
+            if matched:
                 marker = ROOT / item
                 if marker.read_text(encoding='utf-8').strip() != 'AUTHORIZE_ONE_TIME_ELEVENLABS_GENERATION':
                     raise ValueError('Unapproved narration marker: ' + item)
-                approved.append(matched)
+                approved.append(matched.group(1))
         if len(approved) > 1:
             raise ValueError('Generate one approved review per commit to control costs')
         for approved_slug in approved:
