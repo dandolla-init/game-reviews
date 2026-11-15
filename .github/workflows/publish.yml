@@ -108,7 +108,7 @@ jobs:
             # Merely editing a review or marker never spends credits.
             if [ -n "$GITHUB_EVENT_BEFORE" ] && [ "${GITHUB_EVENT_BEFORE//0/}" != "" ]; then
               request_files="$(git diff --diff-filter=A --name-only "$GITHUB_EVENT_BEFORE" "$GITHUB_SHA" -- .narration-requests/)"
-              if printf '%s\n' "$request_files" | grep -Eq '^\.narration-requests/preflight-[0-9]+\.txt
+              if printf '%s\n' "$request_files" | grep -Eq '^\.narration-requests/preflight-[0-9]+\.txt$'; then
                 test -n "$ELEVENLABS_API_KEY" || { echo 'ElevenLabs API key secret is missing' >&2; exit 1; }
                 test -n "$ELEVENLABS_VOICE_ID" || { echo 'ElevenLabs voice ID variable is missing' >&2; exit 1; }
                 command -v ffmpeg >/dev/null || { echo 'ffmpeg unavailable' >&2; exit 1; }
