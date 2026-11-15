@@ -277,7 +277,7 @@ def main():
                 ['git', 'diff', '--diff-filter=A', '--name-only', before, after,
                  '--', '.narration-requests/'], cwd=ROOT, text=True)
             marker_paths = changed.splitlines()
-        preflight = any(re.fullmatch(r'\\.narration-requests/preflight-[0-9]+\\.txt', p)
+        preflight = any(p.startswith('.narration-requests/preflight-') and p.endswith('.txt') for p in marker_paths)
                         for p in marker_paths)
         if preflight:
             if not os.getenv('ELEVENLABS_API_KEY') or not os.getenv('ELEVENLABS_VOICE_ID'):
@@ -290,12 +290,12 @@ def main():
             print('PREFLIGHT_COMPLETE_NO_CREDITS_USED')
         approved = []
         for item in marker_paths:
-            matched = re.fullmatch(r'\\.narration-requests/(danganronpa-trigger-happy-havoc|signalis-alatyr)\\.approved', item)
-            if matched:
+            matched = item.removeprefix('.narration-requests/').removesuffix('.approved') if item.startswith('.narration-requests/') and item.endswith('.approved') else None
+            if matched in ('danganronpa-trigger-happy-havoc', 'signalis-alatyr'):
                 marker = ROOT / item
                 if marker.read_text(encoding='utf-8').strip() != 'AUTHORIZE_ONE_TIME_ELEVENLABS_GENERATION':
                     raise ValueError('Unapproved narration marker: ' + item)
-                approved.append(matched.group(1))
+                approved.append(matched)
         if len(approved) > 1:
             raise ValueError('Generate one approved review per commit to control costs')
         for approved_slug in approved:
