@@ -28,6 +28,11 @@ img { max-width:100%; }
 .top-links { display:flex;align-items:center;gap:31px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:750; }
 .top-links a { color:#b3c3df;transition:color .18s; }
 .top-links a:hover,.top-links a:focus { color:white; }
+.theme-toggle { display:inline-flex;gap:7px;align-items:center;justify-content:center;background:transparent;color:#d8e3f7;border:1px solid #586984;padding:8px 11px;min-height:37px;cursor:pointer;font-size:.69rem;font-weight:800;letter-spacing:.02em;text-transform:none;border-radius:3px;white-space:nowrap; }
+.theme-toggle:hover,.theme-toggle:focus-visible { color:#fff;border-color:#b4c9ef;background:#222f48; }
+.theme-toggle:focus-visible { outline:2px solid #b4c9ef;outline-offset:3px; }
+.theme-toggle-icon { font-size:1rem;line-height:1; }
+
 .site-footer { background:var(--deep);color:#b7c6df;padding:26px 0;font-size:.76rem;letter-spacing:.015em; }
 .footer-inner { display:flex;justify-content:space-between;gap:20px;align-items:center; }
 .footer-note { color:#7f92b5; }
@@ -126,7 +131,7 @@ img { max-width:100%; }
   .site-header { height:64px; }
   .wordmark { font-size:.69rem;letter-spacing:.065em; }
   .top-links { gap:15px;font-size:.63rem; }
-  .top-links a:last-child { display:none; }
+  .top-links a:last-of-type { display:none; }
   .hero-banner { display:block;min-height:0;background:#9ab1d6;border-bottom:2px solid #131525; }
   .banner-art { position:relative;display:block;height:230px;object-position:74% center;object-fit:cover; }
   .hero-banner::after { display:none; }
@@ -166,3 +171,50 @@ img { max-width:100%; }
   .archive-layout { padding:58px 0 90px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition:none!important; } }
+
+/* User-controlled dark theme. The supplied blue illustrated homepage banner remains unchanged. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #e6ecf7;
+  --paper: #101622;
+  --card: #1b2535;
+  --line: #35455d;
+  --muted: #a3b5d0;
+  --article-accent: #9ab5e5;
+}
+:root[data-theme="dark"] .catalogue-count { color:#e0e9f9; }
+:root[data-theme="dark"] .catalogue-count span { color:#9caecb; }
+:root[data-theme="dark"] .period { color:#a5bde5; }
+:root[data-theme="dark"] .review-item:hover,
+:root[data-theme="dark"] .review-item:focus-visible { background:#1b2637; }
+:root[data-theme="dark"] .review-art { border-color:#54617a; }
+:root[data-theme="dark"] .review-copy p { color:#bdcbe1; }
+:root[data-theme="dark"] .tag { border-color:#607494;color:#bcd1f1; }
+:root[data-theme="dark"] .read-time,
+:root[data-theme="dark"] .catalogue-tail { color:#a4b5d1; }
+:root[data-theme="dark"] .review-arrow { color:#bbceee; }
+:root[data-theme="dark"] .toc-sticky { border-color:#50627e; }
+:root[data-theme="dark"] .toc-sticky a { color:#b2c2dd; }
+:root[data-theme="dark"] .toc-sticky a:hover { color:#f4f7ff; }
+:root[data-theme="dark"] .spoiler-notice { background:#1b2b3e;border-color:#455f7d;color:#d7e4fa; }
+:root[data-theme="dark"] .spoiler-notice>span:first-child { color:#b3caf3; }
+:root[data-theme="dark"] .companion-card { background:#1a2535;border-color:#465874; }
+:root[data-theme="dark"] .companion-card>p:not(.media-pending) { color:#b4c6e1; }
+:root[data-theme="dark"] .media-pending { color:#a8bad5; }
+:root[data-theme="dark"] .prose { color:#dce6f7; }
+:root[data-theme="dark"] .prose h2 { color:#f1f5ff;border-color:#435672; }
+:root[data-theme="dark"] .prose strong { color:#f1f5ff; }
+:root[data-theme="dark"] .prose em { color:#b7c9ec; }
+:root[data-theme="dark"] .prose blockquote { color:#b4c7e4; }
+:root[data-theme="dark"] .prose a { color:#bfd3fb;border-color:#7b9ccb; }
+:root[data-theme="dark"] .article-outro { border-color:#465977; }
+:root[data-theme="dark"] .share-row { border-color:#405571;color:#b2c4df; }
+:root[data-theme="dark"] .next-card { background:#1b293d;border-color:#465c78; }
+:root[data-theme="dark"] .next-card>span:last-child { color:#b7ccef; }
+:root[data-theme="dark"] .copy-link { background:#283d5c;border-color:#536f97; }
+:root[data-theme="dark"] .copy-link:hover { background:#354f73; }
+@media (max-width:700px) {
+  .top-links { gap:9px; }
+  .theme-toggle { min-height:35px;padding:7px 9px; }
+  .theme-toggle-text { display:none; }
+}

@@ -182,13 +182,14 @@ def page(*, title, description, content, site, url, base, og_image='', article=F
   {f'<meta property="og:image" content="{E(og_image)}">' if og_image else ''}
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="{E(base)}/assets/favicon.svg">
+  <script>try{{document.documentElement.dataset.theme=localStorage.getItem('dandolla-theme')==='dark'?'dark':'light';}}catch(e){{document.documentElement.dataset.theme='light';}}</script>
   <link rel="stylesheet" href="{E(base)}/assets/styles.css">
   <link rel="alternate" type="application/rss+xml" href="{E(base)}/feed.xml" title="RSS">
 </head><body>
   <div class="progress" id="reading-progress" aria-hidden="true"></div>
   <header class="site-header"><div class="container header-inner">
     <a class="wordmark" href="{E(base)}/">{E(site['title'])}</a>
-    <nav class="top-links" aria-label="Main navigation"><a href="{E(base)}/#catalogue">Reviews</a><a href="{E(base)}/archive/">Archive</a><a href="{E(base)}/feed.xml">RSS ↗</a></nav>
+    <nav class="top-links" aria-label="Main navigation"><a href="{E(base)}/#catalogue">Reviews</a><a href="{E(base)}/archive/">Archive</a><a href="{E(base)}/feed.xml">RSS ↗</a><button type="button" id="theme-toggle" class="theme-toggle" aria-label="Enable dark mode" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☾</span><span class="theme-toggle-text">Dark mode</span></button></nav>
   </div></header>
   <main id="main-content">{content}</main>
   <footer class="site-footer"><div class="container footer-inner"><div>{E(site['title'])}<span class="footer-note"> · {E(site['footer_note'])}</span></div><span>© {dt.date.today().year} {E(site['author'])}</span></div></footer>
