@@ -13,10 +13,10 @@ import build
 
 
 class NarrationTests(unittest.TestCase):
-    def test_signalis_hidden_during_voice_auditions(self):
+    def test_signalis_narration_ready_for_approved_generation(self):
         post = build.parse_post(ROOT / 'posts' / 'signalis-alatyr.md')
-        self.assertEqual(post['narration'], 'manual')
-        self.assertEqual(post['audio'], '')
+        self.assertEqual(post['narration'], 'elevenlabs')
+        self.assertIn(post['audio'], ('', '/assets/audio/signalis-alatyr.mp3'))
 
     def test_plain_text_from_markdown(self):
         sample = '''# Review\n\n*A long* **opinion** about [the game](https://example.com).\n\n![Poster](poster.jpg)\n\n## Final thought\n\nOne must imagine Adler happy.''' 
@@ -62,7 +62,7 @@ class NarrationTests(unittest.TestCase):
             (cloned / 'assets' / 'audio').mkdir(parents=True)
             (cloned / 'assets' / 'audio' / 'signalis-alatyr.mp3').write_bytes(b'rejected')
             (cloned / 'posts').mkdir()
-            source = (ROOT / 'posts' / 'signalis-alatyr.md').read_text(encoding='utf-8')
+            source = (ROOT / 'posts' / 'signalis-alatyr.md').read_text(encoding='utf-8').replace('narration: elevenlabs', 'narration: manual', 1)
             (cloned / 'posts' / 'signalis-alatyr.md').write_text(source, encoding='utf-8')
             with patch.object(build, 'ROOT', cloned), patch.object(build, 'validate_local_asset', lambda p: p):
                 post = build.parse_post(cloned / 'posts' / 'signalis-alatyr.md')

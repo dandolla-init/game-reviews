@@ -21,7 +21,10 @@ class SiteTests(unittest.TestCase):
         self.assertIn('One Must Imagine Adler Happy', post['html'])
         self.assertIn('Camus', post['html'])
         self.assertIn('The Promise Is the Point', post['html'])
-        self.assertEqual(post['audio'], '')
+        if post['audio']:
+            self.assertEqual(post['audio'], '/assets/audio/signalis-alatyr.mp3')
+        else:
+            self.assertEqual(post['audio'], '')
         self.assertEqual(post['youtube'], '')
 
     def test_catalogue_manual_order_and_renders(self):
@@ -41,7 +44,10 @@ class SiteTests(unittest.TestCase):
         self.assertIn('catalogue', home)
         self.assertIn('library_600x900.jpg', home)
         article = build.render_post(post, json.loads((ROOT / 'site.json').read_text()), '/game-reviews', 'https://example.github.io/game-reviews', None)
-        self.assertNotIn('Audio narration', article)
+        if post['audio']:
+            self.assertIn('Audio narration', article)
+        else:
+            self.assertNotIn('Audio narration', article)
         self.assertIn('Video review', article)
         self.assertNotIn('Narrated edition coming soon', article)
         self.assertIn('Video essay to follow', article)
@@ -55,8 +61,8 @@ class SiteTests(unittest.TestCase):
         post['youtube'] = 'https://www.youtube.com/watch?v=abcdefghijk'
         with patch.object(build, 'ROOT', ROOT), patch.object(build, 'validate_local_asset', return_value='/assets/audio/voiceover.mp3'):
             html = build.render_media(post, '/reviews')
-        self.assertNotIn('<audio controls', html)
-        self.assertNotIn('Audio narration', html)
+        self.assertIn('<audio controls', html)
+        self.assertIn('Audio narration', html)
         self.assertIn('https://www.youtube.com/watch?v=abcdefghijk', html)
         self.assertNotIn('coming soon', html)
 

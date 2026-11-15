@@ -9,7 +9,7 @@ cover_image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps
 cover_alt: "Official SIGNALIS promotional cover art"
 cover_fallback: "/assets/signalis-placeholder.svg"
 audio: "" # Leave blank to let ElevenLabs supply the MP3 automatically
-narration: manual # Awaiting approval of a British-English voice audition
+narration: elevenlabs # Approved expressive Dandolla1 voice
 youtube: "" # When published: https://www.youtube.com/watch?v=YOUR_VIDEO_ID
 # Optional: accent: "#7895c9"
 published: true

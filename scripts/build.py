@@ -235,13 +235,21 @@ def render_archive(posts, site, base, site_url):
 
 
 def render_media(post, base):
-    """Keep any rejected audio off the public review pages."""
+    """Show the audio player only after a fresh recording exists."""
+    listen = ''
+    if post['audio']:
+        src = media_src(post['audio'], base, must_exist=post['audio'].startswith('/assets/'))
+        listen = f'''<div class="companion-card"><div class="eyebrow">01 / LISTEN</div>
+          <h2>Audio narration</h2><p>Hear the review read aloud.</p>
+          <audio controls preload="metadata" aria-label="Listen to {E(post['title'])}"><source src="{E(src)}" type="audio/mpeg">Your browser does not support the audio element.</audio></div>'''
     if post['youtube']:
         video_inner = f'<a class="media-action" href="{E(post["youtube"])}" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>'
     else:
         video_inner = '<p class="media-pending">Video essay to follow.</p>'
-    return f'''<section class="companion-section" aria-label="Companion video">
-      <div class="companion-card"><div class="eyebrow">WATCH</div><h2>Video review</h2><p>Watch the companion video on YouTube.</p>{video_inner}</div>
+    return f'''<section class="companion-section" aria-label="Other ways to experience this review">
+      {listen}
+      <div class="companion-card"><div class="eyebrow">02 / WATCH</div>
+        <h2>Video review</h2><p>Watch the companion video on YouTube.</p>{video_inner}</div>
     </section>'''
 
 
@@ -304,9 +312,6 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     shutil.copytree(ROOT / 'assets', OUT / 'assets')
-    # Rejected legacy recordings remain in repository history, not the live site.
-    for rejected in (OUT / 'assets' / 'audio').glob('*.mp3'):
-        rejected.unlink()
     write(OUT / 'index.html', render_index(posts, site, base, site_url))
     write(OUT / 'archive' / 'index.html', render_archive(posts, site, base, site_url))
     for i, post in enumerate(posts):
