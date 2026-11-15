@@ -101,16 +101,6 @@ jobs:
           elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
             python scripts/narrate.py --new-publications
           fi
-      - name: Preserve generated MP3 in repository
-        shell: bash
-        run: |
-          git add -A -- assets/audio/ assets/voice-auditions/
-          if ! git diff --cached --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Add review narration [skip ci]"
-            git push origin HEAD:main
-          fi
       - name: Inspect British voice options without generating speech
         env:
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
@@ -124,6 +114,17 @@ jobs:
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
           GITHUB_SHA: ${{ github.sha }}
         run: python scripts/voice_samples.py --only-new-request
+      - name: Preserve generated MP3 in repository
+        shell: bash
+        run: |
+          git add -A -- assets/audio/
+          if [ -d assets/voice-auditions ]; then git add -A -- assets/voice-auditions/; fi
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Add review narration [skip ci]"
+            git push origin HEAD:main
+          fi
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Build static website

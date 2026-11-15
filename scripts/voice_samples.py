@@ -14,7 +14,7 @@ from urllib import request, error
 
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "assets" / "voice-auditions"
-MARKER = ".voice-auditions/generate-1.request"
+MARKER_PREFIX = ".voice-auditions/generate-"
 AUTH = "AUTHORIZE_SHORT_PAID_VOICE_AUDITIONS_ONLY"
 VOICE_GEORGE = "JBFqnCBsd6RMkjVDRZzb"  # British storyteller
 VOICE_DANIEL = "onwK4e9ZLuTAKqWW03F9"  # British broadcaster
@@ -47,10 +47,12 @@ def new_request():
         return False
     changed = subprocess.check_output(["git", "diff", "--diff-filter=A", "--name-only", before, after,
                                        "--", ".voice-auditions/"], text=True, cwd=ROOT).splitlines()
-    if MARKER not in changed:
+    marker_files = [p for p in changed if p.startswith(MARKER_PREFIX) and p.endswith(".request")]
+    if not marker_files:
         return False
-    if (ROOT / MARKER).read_text(encoding="utf-8").strip() != AUTH:
-        raise RuntimeError("Voice auditions were not authorised")
+    for item in marker_files:
+        if (ROOT / item).read_text(encoding="utf-8").strip() != AUTH:
+            raise RuntimeError("Voice auditions were not authorised")
     return True
 
 def generate():
