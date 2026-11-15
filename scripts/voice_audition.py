@@ -49,7 +49,7 @@ def new_marker():
     lines = subprocess.check_output(["git", "diff", "--diff-filter=A", "--name-only",
                                      old, new, "--", ".voice-auditions/"],
                                     cwd=ROOT, text=True).splitlines()
-    return ".voice-auditions/inspect-1.request" in lines
+    return any(p.startswith(".voice-auditions/inspect-") and p.endswith(".request") for p in lines)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
