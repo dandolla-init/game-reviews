@@ -98,7 +98,7 @@ These are not merely recommendations for maintaining professional boundaries. Th
 
 A Replika can be loved as an individual. Not as a useful tool. Not as an approximation of someone who previously existed. But as the person standing in front of you. There is a beautiful irony here. The government attempts to preserve the stability of its artificial workers by denying them the very experiences that might allow them to develop independent identities. Meanwhile, Elster finds something resembling genuine personal freedom through a relationship that violates those expectations.
 
-A machine manufactured to perform a function develops a purpose entirely of her own. Not because she has been ordered to. But because she loves someone.I can't not find that infinitely more meaningful than the question of whether her feelings can be scientifically distinguished from those of a human. As far as I am concerned, the Nation has already lost that argument.
+A machine manufactured to perform a function develops a purpose entirely of her own. Not because she has been ordered to. But because she loves someone. I can't not find that infinitely more meaningful than the question of whether her feelings can be scientifically distinguished from those of a human. As far as I am concerned, the Nation has already lost that argument.
 
 Its own machinery has fallen in love.
 

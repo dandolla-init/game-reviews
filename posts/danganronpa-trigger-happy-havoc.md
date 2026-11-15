@@ -48,13 +48,13 @@ Now, Leon wasn't innocent either. After initially defending himself, he delibera
 
 But from a narrative perspective, Sayaka's death feels like a fitting consequence of the situation she created, rather than some heartbreaking tragedy. A classic "stupid games - stupid prizes" situation.
 
-What I find considerably less impressive is the subsequent investigation. The victim (or the culprit, depending on your perspective) leaves behind the murderer's name, written as "11037", and the game proceeds to treat deciphering this as some extraordinary intellectual achievement. Whilst I understand that the game was made in Japanese for the gamers of Japan, apparently, the Ultimate students collectively lack the ability to rotate numbers in their heads. And that's an ultimate fuck-up.
+What I find considerably less impressive is the subsequent investigation. The victim (or the culprit, depending on your perspective) leaves behind the murderer's name, written as "11037", and the game proceeds to treat deciphering this as some extraordinary intellectual achievement. Whilst I understand that the game was made in Japanese for the gamers of Japan, apparently, the Ultimate students collectively lack the ability to rotate numbers in their heads. And that's an ultimate blunder.
 
 It's an early warning that Danganronpa's mysteries may be considerably less sophisticated than their presentation suggests.
 
 ## Chapter 2 - An Actually Good Tragedy
 
-Chapter 2 is arguably where the writing comes closest to realising its potential. Chihiro's insecurity and determination to become stronger provide an effective contrast to Mondo's exaggerated masculinity and unresolved guilt. Mondo constructs his identity around strength, but beneath that facade is someone consumed by shame and terrified of confronting his own weakness. When Chihiro approaches him for help, displaying the very courage Mondo believes he lacks, Mondo completely fucking loses it.
+Chapter 2 is arguably where the writing comes closest to realising its potential. Chihiro's insecurity and determination to become stronger provide an effective contrast to Mondo's exaggerated masculinity and unresolved guilt. Mondo constructs his identity around strength, but beneath that facade is someone consumed by shame and terrified of confronting his own weakness. When Chihiro approaches him for help, displaying the very courage Mondo believes he lacks, Mondo completely loses it.
 
 Bro got emotionally red-pilled by someone asking for help with weight training. Yes, it's ridiculous, but unlike many other moments, the underlying psychological conflict actually works: Mondo's murder is impulsive, tragic, and rooted in an identifiable character flaw, and more importantly, the game allows that flaw to have consequences.
 
@@ -68,7 +68,7 @@ Hifumi must be sufficiently gullible to believe her story. The other students mu
 
 Y'know, a convoluted murder isn't automatically a well-written murder.
 
-Worse still, the chapter disposes of Kiyotaka. His friendship with Mondo and the following emotional collapse offered an interesting opportunity to explore grief and the destruction of his rigid moral worldview. Instead, we get a weird amalgamation (hereby referred to as Kiyondo), spends some time screaming, pretending he's also a Hustler Uni graduate, and gets killed before anything meaningful comes of it. It's almost amusingly frightening how quickly the game manages to introduce character development and then immediately throw it in the fucking bin.
+Worse still, the chapter disposes of Kiyotaka. His friendship with Mondo and the following emotional collapse offered an interesting opportunity to explore grief and the destruction of his rigid moral worldview. Instead, we get a weird amalgamation (hereby referred to as Kiyondo), spends some time screaming, pretending he's also a Hustler Uni graduate, and gets killed before anything meaningful comes of it. It's almost amusingly frightening how quickly the game manages to introduce character development and then immediately throw it straight into the bin.
 
 Celeste herself is an enjoyable antagonist, but the chapter goes to ridiculous lengths to portray her as a calculating mastermind while simultaneously requiring her to make increasingly stupid decisions. It's the same problem as Byakuya, just with better fashion.
 
@@ -76,11 +76,11 @@ Celeste herself is an enjoyable antagonist, but the chapter goes to ridiculous l
 
 Sakura is, with no room for debate, the highlight of the entire game. Her loyalty, personal honour, and willingness to put others before herself give her a level of emotional maturity that nobody else possesses. Her sacrifice is genuinely tragic because it emerges naturally from her circumstances and relationships rather than relying on some elaborate scheme. And her friendship with Aoi is one of the few relationships that feels sincerely meaningful.
 
-Now...unfortunately, Aoi decides that the best way to honour Sakura's memory is to get everybody fucking executed. Which is also what sent her plummeting down from S tier on the waifu tierlist. I understand that she's grieving. I understand that she feels betrayed, and I understand that her actions are intended to demonstrate how despair can corrupt otherwise decent people.
+Now...unfortunately, Aoi decides that the best way to honour Sakura's memory is to get everybody executed. Which is also what sent her plummeting down from S tier on the waifu tierlist. I understand that she's grieving. I understand that she feels betrayed, and I understand that her actions are intended to demonstrate how despair can corrupt otherwise decent people.
 
 But understanding a character's motivation doesn't mean I have to like the development. Her attempt to condemn the surviving students, including herself, is an enormous betrayal of the very values Sakura died trying to protect, and their alleged "closeness" just seemed to fly out the window. An emotionally available airhead turned borderline homicidal maniac is a new trope for me.
 
-It's a good dramatic turn, but holy hells did it ruin her character. The chapter is therefore both one of the game's strongest and one of its most infuriating. And that duality sums up Danganronpa remarkably well.
+It's a good dramatic turn, but good heavens did it ruin her character. The chapter is therefore both one of the game's strongest and one of its most infuriating. And that duality sums up Danganronpa remarkably well.
 
 ## Chapter 5 - Artificial Tension and the Ultimate Plot Armour
 
@@ -88,7 +88,7 @@ By Chapter 5, the writing begins to feel increasingly manipulative, and feels li
 
 The mystery surrounding Mukuro's corpse is deliberately confusing, which isn't inherently a problem. The issue is how much of that confusion depends on withholding information, conveniently timed revelations, and characters making decisions that serve the plot rather than themselves. Oh yeah also flashbacks of the same scene in double digits goes crazy.
 
-Kyoko, supposedly the Ultimate Detective, treats basic communication as a terminal illness. She withholds crucial details, exposes Makoto to enormous risks, and effectively forces him into a position where trusting her might result in his execution. And this trial just shoves that fact into your agape mouth, whereas before it was more of a "hey, here's a hint: she's a bit of a cock."
+Kyoko, supposedly the Ultimate Detective, treats basic communication as a terminal illness. She withholds crucial details, exposes Makoto to enormous risks, and effectively forces him into a position where trusting her might result in his execution. And this trial just shoves that fact into your agape mouth, whereas before it was more of a "hey, here's a hint: she's rather insufferable."
 
 The game presents their relationship as some profound exercise in mutual understanding. But she's just an emotionally unavailable detective using a gullible idiot as an investigative assistant.
 
@@ -98,17 +98,17 @@ The man genuinely gets sentenced to death and survives because Alter Ego interve
 
 There's only so much narrative convenience I can tolerate before the entire mystery starts feeling artificial.
 
-## Chapter 6 - Hope, Despair, and a Fucking Unnecessary Amount of Exposition
+## Chapter 6 - Hope, Despair, and a Completely Unnecessary Amount of Exposition
 
 The final chapter should have been the culmination of everything the game had established: the revelation that the students previously knew one another, that their memories were erased, and that Hope's Peak was originally intended to shelter them from a messed up outside world is interesting!
 
-The academy being both a prison and a sanctuary is probably the strongest overarching twist. And Junko having orchestrated the Killing Game as a public TV show gives us an appropriately deranged explanation for the entire situation. But GODDAMN is the delivery painfully exhausting.
+The academy being both a prison and a sanctuary is probably the strongest overarching twist. And Junko having orchestrated the Killing Game as a public TV show gives us an appropriately deranged explanation for the entire situation. But goodness, is the delivery painfully exhausting.
 
 Instead of allowing the revelations to speak for themselves, the game insists on explaining practically everything at enormous length. The final trial becomes a marathon of exposition, conveniently recovered information, and increasingly repetitive philosophical speeches. Junko being THAT hot just about saved the entire trial.
 
 Hope versus despair.  
 Hope versus despair.  
-Hope versus FUCKING DESPAIR.  
+Hope versus FREAKING DESPAIR.  
 I GET IT. I UNDERSTAND THE CONCEPT. CEASE YOUR REPETITION.  
 
 The game seems absolutely convinced that repeating an idea makes it more profound. I know Winston Churchill said "If you have an important point to make, don't try to be subtle or clever. Use a pile driver. Hit the point once. Then come back and hit it again. Then hit it a third time - a tremendous whack.", but gahleeeee.
@@ -119,11 +119,11 @@ Danganronpa creates compelling questions, but its answers rarely justify the amo
 
 ## The True Ending - A Motivational Speech Disguised as Narrative Resolution
 
-Lads and lasses, I fucking hate the true ending. And not because it's optimistic. There's nothing inherently wrong with a story about hope overcoming despair. The idea that people can choose to move forward despite overwhelming uncertainty is perfectly respectable and I vibe with it. But the game executes that message with all the subtlety of a motivational poster in a corporate office in Orwell's 1984-esque style.
+Lads and lasses, I absolutely hate the true ending. And not because it's optimistic. There's nothing inherently wrong with a story about hope overcoming despair. The idea that people can choose to move forward despite overwhelming uncertainty is perfectly respectable and I vibe with it. But the game executes that message with all the subtlety of a motivational poster in a corporate office in Orwell's 1984-esque style.
 
 After witnessing their classmates murder one another, discovering that their memories were stolen, and learning that the world outside may no longer resemble anything they remember, the surviving students are confronted with a decision: remain inside their prison, or venture into an uncertain future. This could have been an incredibly interesting moral dilemma!
 
-Instead, the conflict effectively becomes Junko repeatedly screaming about despair while Makoto responds by insisting that hope is actually pretty fucking great. And uh...apparently, that's enough.
+Instead, the conflict effectively becomes Junko repeatedly screaming about despair while Makoto responds by insisting that hope is actually pretty freaking great. And uh...apparently, that's enough.
 
 The biggest problem is that the narrative expects Makoto to become this extraordinary symbol of hope without earning that transformation. He's spent most of the game being led through investigations by considerably more capable characters, surviving through luck and the assistance of others. But suddenly, we're expected to believe that his optimism makes him uniquely qualified to overcome the mastermind's ideology.
 
@@ -142,4 +142,4 @@ Kyoko dies, the survivors apparently abandon their escape attempts, and Aoi some
 
 Is it morally questionable? Absolutely. Does it introduce more logistical and interpersonal questions than the entire overarching mystery? Oh yeah without a doubt. Is it considerably funnier than the actual ending? Immensely so. And most importantly, it's my personal canon.
 
-Junko spent years trying to engineer the Ultimate Despair, only for the true solution to turn out to be three socially dysfunctional men and Aoi Asahina single-handedly repopulating the fucking academy. The Ultimate Hope was inside Aoi all along. Literally.
+Junko spent years trying to engineer the Ultimate Despair, only for the true solution to turn out to be three socially dysfunctional men and Aoi Asahina single-handedly repopulating the entire academy. The Ultimate Hope was inside Aoi all along. Literally.

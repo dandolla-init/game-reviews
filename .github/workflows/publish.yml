@@ -52,6 +52,16 @@ jobs:
           python-version: '3.12'
       - name: Install site dependencies
         run: pip install -r requirements.txt
+      - name: Check Discord webhook configuration (no secrets printed)
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_CONFIGURED=true"
+          else
+            echo "DISCORD_WEBHOOK_CONFIGURED=false"
+          fi
       - name: Run project tests
         run: python -m unittest discover -s tests -v
       - name: Generate opted-in ElevenLabs narration
