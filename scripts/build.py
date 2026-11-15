@@ -304,6 +304,9 @@ def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     shutil.copytree(ROOT / 'assets', OUT / 'assets')
+    # Rejected legacy recordings remain in repository history, not the live site.
+    for rejected in (OUT / 'assets' / 'audio').glob('*.mp3'):
+        rejected.unlink()
     write(OUT / 'index.html', render_index(posts, site, base, site_url))
     write(OUT / 'archive' / 'index.html', render_archive(posts, site, base, site_url))
     for i, post in enumerate(posts):

@@ -104,7 +104,7 @@ jobs:
       - name: Preserve generated MP3 in repository
         shell: bash
         run: |
-          git add -A -- assets/audio/
+          git add -A -- assets/audio/ assets/voice-auditions/
           if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -118,6 +118,12 @@ jobs:
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
           GITHUB_SHA: ${{ github.sha }}
         run: python scripts/voice_audition.py --inspect-on-new-marker
+      - name: Generate explicitly requested British emotional voice auditions
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: python scripts/voice_samples.py --only-new-request
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Build static website
