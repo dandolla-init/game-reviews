@@ -111,6 +111,7 @@ jobs:
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
           GITHUB_SHA: ${{ github.sha }}
           DISCORD_FORUM_MODE: ${{ vars.DISCORD_FORUM_MODE }}
+          DISCORD_ROLE_ID: ${{ vars.DISCORD_ROLE_ID || '884385448410087455' }}
           MANUAL_ANNOUNCE_SLUG: ${{ inputs.announce_slug }}
         run: |
           if [ -n "$MANUAL_ANNOUNCE_SLUG" ]; then

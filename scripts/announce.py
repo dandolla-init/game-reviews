@@ -92,6 +92,14 @@ def announce(post, webhook, site_url):
             'footer': {'text': 'Written reviews · Full spoilers may follow'},
         }],
     }
+    # Ping exactly one opt-in role, never @everyone or arbitrary mentions.
+    # DISCORD_ROLE_ID is a repository variable, not the role's display name.
+    role_id = os.getenv('DISCORD_ROLE_ID', '').strip()
+    if role_id:
+        if not re.fullmatch(r'[0-9]{15,22}', role_id):
+            raise ValueError('DISCORD_ROLE_ID must be the numeric Discord role ID, not its name')
+        payload['content'] = f'<@&{role_id}>'
+        payload['allowed_mentions'] = {'roles': [role_id]}
     if post.get('cover_image'):
         cover = str(post['cover_image'])
         if cover.startswith('/assets/'):

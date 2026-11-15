@@ -13,9 +13,9 @@ import build
 
 
 class NarrationTests(unittest.TestCase):
-    def test_signalis_is_opted_in_but_audio_not_generated_yet(self):
+    def test_signalis_is_held_for_editorial_approval(self):
         post = build.parse_post(ROOT / 'posts' / 'signalis-alatyr.md')
-        self.assertEqual(post['narration'], 'elevenlabs')
+        self.assertEqual(post['narration'], 'manual')
         self.assertEqual(post['audio'], '')
 
     def test_plain_text_from_markdown(self):
@@ -36,6 +36,8 @@ class NarrationTests(unittest.TestCase):
 
     def test_signalis_dry_run_no_network(self):
         post = build.parse_post(ROOT / 'posts' / 'signalis-alatyr.md')
+        # Simulate opt-in without modifying the review currently awaiting approval.
+        post['narration'] = 'elevenlabs'
         with patch.object(narrate, 'request_audio', side_effect=AssertionError('Network not allowed')):
             result = narrate.generate(post, dry_run=True)
         self.assertFalse(result)
@@ -44,6 +46,7 @@ class NarrationTests(unittest.TestCase):
 
     def test_existing_audio_requires_force_to_regenerate(self):
         post = build.parse_post(ROOT / 'posts' / 'signalis-alatyr.md')
+        post['narration'] = 'elevenlabs'
         with tempfile.TemporaryDirectory() as tmp:
             with patch.object(narrate, 'ROOT', Path(tmp)):
                 target = Path(tmp) / 'assets' / 'audio' / 'signalis-alatyr.mp3'
@@ -58,8 +61,12 @@ class NarrationTests(unittest.TestCase):
             cloned = Path(tmp)
             (cloned / 'assets' / 'audio').mkdir(parents=True)
             (cloned / 'assets' / 'audio' / 'signalis-alatyr.mp3').write_bytes(b'fake')
+            (cloned / 'posts').mkdir()
+            source = (ROOT / 'posts' / 'signalis-alatyr.md').read_text(encoding='utf-8')
+            source = source.replace('narration: manual', 'narration: elevenlabs', 1)
+            (cloned / 'posts' / 'signalis-alatyr.md').write_text(source, encoding='utf-8')
             with patch.object(build, 'ROOT', cloned), patch.object(build, 'validate_local_asset', lambda x: x):
-                post = build.parse_post(ROOT / 'posts' / 'signalis-alatyr.md')
+                post = build.parse_post(cloned / 'posts' / 'signalis-alatyr.md')
                 player = build.render_media(post, '/game-reviews')
             self.assertEqual(post['audio'], '/assets/audio/signalis-alatyr.mp3')
             self.assertIn('<audio controls', player)
