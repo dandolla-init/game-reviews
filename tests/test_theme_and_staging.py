@@ -39,7 +39,7 @@ class ArticleImportTests(unittest.TestCase):
         source = (ROOT/'posts/signalis-alatyr.md').read_text(encoding='utf-8')
         self.assertNotIn('—', source)
         self.assertNotIn('–', source)
-        self.assertIn('narration: elevenlabs', source)
+        self.assertIn('narration: manual', source)
     def test_role_default_in_workflow(self):
         workflow = (ROOT/'.github/workflows/publish.yml').read_text()
         self.assertIn('884385448410087455', workflow)

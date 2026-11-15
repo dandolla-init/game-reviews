@@ -13,9 +13,9 @@ import build
 
 
 class NarrationTests(unittest.TestCase):
-    def test_signalis_opted_in_without_auto_generation(self):
+    def test_signalis_hidden_during_voice_auditions(self):
         post = build.parse_post(ROOT / 'posts' / 'signalis-alatyr.md')
-        self.assertEqual(post['narration'], 'elevenlabs')
+        self.assertEqual(post['narration'], 'manual')
         self.assertEqual(post['audio'], '')
 
     def test_plain_text_from_markdown(self):
@@ -56,22 +56,20 @@ class NarrationTests(unittest.TestCase):
                     self.assertFalse(narrate.generate(post))
                 self.assertEqual(target.read_bytes(), b'preserved audio')
 
-    def test_generated_recording_is_rendered_in_native_player(self):
+    def test_rejected_recording_is_not_visible(self):
         with tempfile.TemporaryDirectory() as tmp:
             cloned = Path(tmp)
             (cloned / 'assets' / 'audio').mkdir(parents=True)
-            (cloned / 'assets' / 'audio' / 'signalis-alatyr.mp3').write_bytes(b'fake')
+            (cloned / 'assets' / 'audio' / 'signalis-alatyr.mp3').write_bytes(b'rejected')
             (cloned / 'posts').mkdir()
             source = (ROOT / 'posts' / 'signalis-alatyr.md').read_text(encoding='utf-8')
-            source = source.replace('narration: manual', 'narration: elevenlabs', 1)
             (cloned / 'posts' / 'signalis-alatyr.md').write_text(source, encoding='utf-8')
-            with patch.object(build, 'ROOT', cloned), patch.object(build, 'validate_local_asset', lambda x: x):
+            with patch.object(build, 'ROOT', cloned):
                 post = build.parse_post(cloned / 'posts' / 'signalis-alatyr.md')
-                player = build.render_media(post, '/game-reviews')
-            self.assertEqual(post['audio'], '/assets/audio/signalis-alatyr.mp3')
-            self.assertIn('<audio controls', player)
-            self.assertIn('/game-reviews/assets/audio/signalis-alatyr.mp3', player)
-            self.assertIn('ElevenLabs voice', player)
+                page = build.render_media(post, '/game-reviews')
+            self.assertEqual(post['audio'], '')
+            self.assertNotIn('<audio', page)
+            self.assertNotIn('Audio narration', page)
 
 
 if __name__ == '__main__':

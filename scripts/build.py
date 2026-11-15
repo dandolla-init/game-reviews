@@ -235,20 +235,13 @@ def render_archive(posts, site, base, site_url):
 
 
 def render_media(post, base):
-    if post['audio']:
-        src = media_src(post['audio'], base, must_exist=post['audio'].startswith('/assets/'))
-        audio_inner = f'''<audio controls preload="metadata" aria-label="Listen to {E(post['title'])}">
-          <source src="{E(src)}" type="audio/mpeg">Your browser does not support the audio element.</audio>
-          {"<p class=\"voice-disclosure\">Narrated using Dandolla's ElevenLabs voice.</p>" if post.get('narration_source') == 'elevenlabs' else ''}'''
-    else:
-        audio_inner = '<p class="media-pending">Narrated edition coming soon.</p>'
+    """Keep any rejected audio off the public review pages."""
     if post['youtube']:
         video_inner = f'<a class="media-action" href="{E(post["youtube"])}" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>'
     else:
         video_inner = '<p class="media-pending">Video essay to follow.</p>'
-    return f'''<section class="companion-section" aria-label="Other ways to experience this review">
-      <div class="companion-card"><div class="eyebrow">01 / LISTEN</div><h2>Audio narration</h2><p>Hear the review read aloud.</p>{audio_inner}</div>
-      <div class="companion-card"><div class="eyebrow">02 / WATCH</div><h2>Video review</h2><p>Watch the companion video on YouTube.</p>{video_inner}</div>
+    return f'''<section class="companion-section" aria-label="Companion video">
+      <div class="companion-card"><div class="eyebrow">WATCH</div><h2>Video review</h2><p>Watch the companion video on YouTube.</p>{video_inner}</div>
     </section>'''
 
 

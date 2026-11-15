@@ -111,6 +111,13 @@ jobs:
             git commit -m "Add review narration [skip ci]"
             git push origin HEAD:main
           fi
+      - name: Inspect British voice options without generating speech
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ vars.ELEVENLABS_VOICE_ID }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: python scripts/voice_audition.py --inspect-on-new-marker
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Build static website

@@ -41,9 +41,9 @@ class SiteTests(unittest.TestCase):
         self.assertIn('catalogue', home)
         self.assertIn('library_600x900.jpg', home)
         article = build.render_post(post, json.loads((ROOT / 'site.json').read_text()), '/game-reviews', 'https://example.github.io/game-reviews', None)
-        self.assertIn('Audio narration', article)
+        self.assertNotIn('Audio narration', article)
         self.assertIn('Video review', article)
-        self.assertIn('Narrated edition coming soon', article)
+        self.assertNotIn('Narrated edition coming soon', article)
         self.assertIn('Video essay to follow', article)
         self.assertIn('28 MIN READ', article)
         self.assertIn('Camus', article)
@@ -55,8 +55,8 @@ class SiteTests(unittest.TestCase):
         post['youtube'] = 'https://www.youtube.com/watch?v=abcdefghijk'
         with patch.object(build, 'ROOT', ROOT), patch.object(build, 'validate_local_asset', return_value='/assets/audio/voiceover.mp3'):
             html = build.render_media(post, '/reviews')
-        self.assertIn('<audio controls', html)
-        self.assertIn('/reviews/assets/audio/voiceover.mp3', html)
+        self.assertNotIn('<audio controls', html)
+        self.assertNotIn('Audio narration', html)
         self.assertIn('https://www.youtube.com/watch?v=abcdefghijk', html)
         self.assertNotIn('coming soon', html)
 
