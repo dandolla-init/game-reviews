@@ -15,6 +15,11 @@ on:
         required: false
         default: ''
         type: string
+      preview_tts:
+        description: 'With narrate_slug, preview narration characters and segments without using credits'
+        required: false
+        default: false
+        type: boolean
       confirm_tts_cost:
         description: 'Required when narrate_slug is entered: consent to spending ElevenLabs credits'
         required: false
@@ -70,6 +75,7 @@ jobs:
           ELEVENLABS_VOICE_ID: ${{ vars.ELEVENLABS_VOICE_ID }}
           ELEVENLABS_MODEL_ID: ${{ vars.ELEVENLABS_MODEL_ID }}
           MANUAL_NARRATE_SLUG: ${{ inputs.narrate_slug }}
+          PREVIEW_TTS: ${{ inputs.preview_tts }}
           CONFIRM_TTS_COST: ${{ inputs.confirm_tts_cost }}
           REGENERATE_AUDIO: ${{ inputs.regenerate_audio }}
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
@@ -77,11 +83,15 @@ jobs:
         shell: bash
         run: |
           if [ -n "$MANUAL_NARRATE_SLUG" ]; then
-            if [ "$CONFIRM_TTS_COST" != "true" ]; then
+            if [ "$PREVIEW_TTS" = "true" ]; then
+              python scripts/narrate.py --slug "$MANUAL_NARRATE_SLUG" --dry-run
+            elif [ "$CONFIRM_TTS_COST" != "true" ]; then
               echo "To generate paid narration, check confirm_tts_cost when running the workflow." >&2
               exit 1
             fi
-            if [ "$REGENERATE_AUDIO" = "true" ]; then
+            if [ "$PREVIEW_TTS" = "true" ]; then
+              echo "Preview complete. No ElevenLabs API requests were made."
+            elif [ "$REGENERATE_AUDIO" = "true" ]; then
               python scripts/narrate.py --slug "$MANUAL_NARRATE_SLUG" --force
             else
               python scripts/narrate.py --slug "$MANUAL_NARRATE_SLUG"

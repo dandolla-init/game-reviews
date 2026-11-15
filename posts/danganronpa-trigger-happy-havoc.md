@@ -9,7 +9,7 @@ cover_image: "/assets/covers/danganronpa-cover.jpg"
 cover_alt: "Danganronpa: Trigger Happy Havoc illustrated character collage"
 cover_fallback: "/assets/cover.svg"
 audio: ""
-narration: manual
+narration: elevenlabs
 youtube: ""
 published: true
 ---

@@ -13,9 +13,9 @@ import build
 
 
 class NarrationTests(unittest.TestCase):
-    def test_signalis_is_held_for_editorial_approval(self):
+    def test_signalis_opted_in_without_auto_generation(self):
         post = build.parse_post(ROOT / 'posts' / 'signalis-alatyr.md')
-        self.assertEqual(post['narration'], 'manual')
+        self.assertEqual(post['narration'], 'elevenlabs')
         self.assertEqual(post['audio'], '')
 
     def test_plain_text_from_markdown(self):
