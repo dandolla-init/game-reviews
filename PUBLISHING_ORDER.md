@@ -24,3 +24,7 @@ To bring an existing Danganronpa review over from Discord, copy its full text in
 ## November staging notes
 
 The complete Danganronpa review was imported from the author's supplied text and remains unpublished for proofreading. Its prose was not rewritten. The SIGNALIS text has had Unicode long dashes replaced with ordinary ASCII hyphens, and its ElevenLabs mode is set to manual until the final text is approved. The Discord role ID for `@the readers` is set as the fallback in `.github/workflows/publish.yml` (884385448410087455); an Actions variable of `DISCORD_ROLE_ID` overrides it. Configure the webhook secret before posting.
+
+## New source and artwork preparation
+
+The final SIGNALIS review text from `Remember our promise..txt` was imported into its existing page, preserving the current article title and applying standard Markdown section headings. All long dash glyphs were replaced with plain ASCII hyphens. The Danganronpa draft now expects its supplied portrait art at `assets/covers/danganronpa-cover.jpg`. Upload the JPG before making Danganronpa public, otherwise the build cannot locate the image. No webhook announcements should be sent before the secret `DISCORD_WEBHOOK_URL` is set. To generate the ElevenLabs voice-over later, set each final approved review to `narration: elevenlabs` before running a manual `narrate_slug` workflow with cost confirmation.

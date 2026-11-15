@@ -5,8 +5,8 @@ date: 2026-11-15
 game: "Danganronpa: Trigger Happy Havoc"
 description: "A deeply personal, frequently frustrated look at murder, hope, despair, and the first Danganronpa game's uneven ambitions."
 tags: [Visual Novel, Murder Mystery, Story Analysis, Danganronpa]
-cover_image: "/assets/cover.svg"
-cover_alt: "Temporary placeholder cover art"
+cover_image: "/assets/covers/danganronpa-cover.jpg"
+cover_alt: "Danganronpa: Trigger Happy Havoc illustrated character collage"
 cover_fallback: "/assets/cover.svg"
 audio: ""
 narration: manual
