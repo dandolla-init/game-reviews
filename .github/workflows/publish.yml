@@ -57,12 +57,8 @@ jobs:
           python-version: '3.12'
       - name: Install site dependencies
         run: pip install -r requirements.txt
-      - name: Install ffmpeg for long-form narration
-        shell: bash
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y ffmpeg
-          ffmpeg -version | head -n 1
+      - name: Install ffmpeg for narration
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
       - name: Check Discord webhook configuration (no secrets printed)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -103,95 +99,6 @@ jobs:
               python scripts/narrate.py --slug "$MANUAL_NARRATE_SLUG"
             fi
           elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
-            # One-time, auditable requests when Actions dispatch is unavailable.
-            # Only NEW marker files in this exact push authorize a generation.
-            # Merely editing a review or marker never spends credits.
-            if [ -n "$GITHUB_EVENT_BEFORE" ] && [ "${GITHUB_EVENT_BEFORE//0/}" != "" ]; then
-              request_files="$(git diff --diff-filter=A --name-only "$GITHUB_EVENT_BEFORE" "$GITHUB_SHA" -- .narration-requests/)"
-              if printf '%s\n' "$request_files" | grep -Eq '^\.narration-requests/preflight-[0-9]+\.txt$'; then
-                test -n "$ELEVENLABS_API_KEY" || { echo 'ElevenLabs API key secret is missing' >&2; exit 1; }
-                test -n "$ELEVENLABS_VOICE_ID" || { echo 'ElevenLabs voice ID variable is missing' >&2; exit 1; }
-                command -v ffmpeg >/dev/null || { echo 'ffmpeg unavailable' >&2; exit 1; }
-                echo 'Both ElevenLabs credentials exist in this workflow. No sensitive values printed.'
-                python scripts/narrate.py --slug danganronpa-trigger-happy-havoc --dry-run
-                python scripts/narrate.py --slug signalis-alatyr --dry-run
-                echo 'PREFLIGHT_COMPLETE_NO_CREDITS_USED'
-              fi
-              for slug in danganronpa-trigger-happy-havoc signalis-alatyr; do
-                marker=".narration-requests/$slug.approved"
-                if printf '%s\n' "$request_files" | grep -Fxq "$marker"; then
-                  if [ "$(cat "$marker")" != 'AUTHORIZE_ONE_TIME_ELEVENLABS_GENERATION' ]; then
-                    echo "Invalid request marker: $marker" >&2
-                    exit 1
-                  fi
-                  echo "Starting explicit one-time paid narration for $slug"
-                  python scripts/narrate.py --slug "$slug"
-                fi
-              done
-            fi
-            python scripts/narrate.py --new-publications
-          fi
-      - name: Preserve generated MP3 in repository
-        shell: bash
-        run: |
-          git add -A -- assets/audio/
-          if ! git diff --cached --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Add review narration [skip ci]"
-            git push origin HEAD:main
-          fi
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-      - name: Build static website
-        env:
-          SITE_URL: ${{ vars.SITE_URL }}
-        run: python scripts/build.py
-      - name: Upload website
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: _site
-      - name: Deploy website
-        id: deployment
-        uses: actions/deploy-pages@v4
-      - name: Announce newly published reviews on Discord
-        if: github.event_name == 'push' || inputs.announce_slug != ''
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          SITE_URL: ${{ vars.SITE_URL }}
-          DEPLOYED_URL: ${{ steps.deployment.outputs.page_url }}
-          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
-          GITHUB_SHA: ${{ github.sha }}
-          DISCORD_FORUM_MODE: ${{ vars.DISCORD_FORUM_MODE }}
-          DISCORD_ROLE_ID: ${{ vars.DISCORD_ROLE_ID || '884385448410087455' }}
-          MANUAL_ANNOUNCE_SLUG: ${{ inputs.announce_slug }}
-        run: |
-          if [ -n "$MANUAL_ANNOUNCE_SLUG" ]; then
-            python scripts/announce.py --slug "$MANUAL_ANNOUNCE_SLUG"
-          else
-            python scripts/announce.py
-          fi
-; then
-                test -n "$ELEVENLABS_API_KEY" || { echo 'ElevenLabs API key secret is missing' >&2; exit 1; }
-                test -n "$ELEVENLABS_VOICE_ID" || { echo 'ElevenLabs voice ID variable is missing' >&2; exit 1; }
-                command -v ffmpeg >/dev/null || { echo 'ffmpeg unavailable' >&2; exit 1; }
-                echo 'Both ElevenLabs credentials exist in this workflow. No sensitive values printed.'
-                python scripts/narrate.py --slug danganronpa-trigger-happy-havoc --dry-run
-                python scripts/narrate.py --slug signalis-alatyr --dry-run
-                echo 'PREFLIGHT_COMPLETE_NO_CREDITS_USED'
-              fi
-              for slug in danganronpa-trigger-happy-havoc signalis-alatyr; do
-                marker=".narration-requests/$slug.approved"
-                if printf '%s\n' "$request_files" | grep -Fxq "$marker"; then
-                  if [ "$(cat "$marker")" != 'AUTHORIZE_ONE_TIME_ELEVENLABS_GENERATION' ]; then
-                    echo "Invalid request marker: $marker" >&2
-                    exit 1
-                  fi
-                  echo "Starting explicit one-time paid narration for $slug"
-                  python scripts/narrate.py --slug "$slug"
-                fi
-              done
-            fi
             python scripts/narrate.py --new-publications
           fi
       - name: Preserve generated MP3 in repository

@@ -267,6 +267,39 @@ def main():
             parser.error('Invalid review slug')
         posts = [find_post(args.slug)]
     else:
+        # One-time requests introduced by a new GitHub commit. Existing
+        # markers are deliberately ignored so later commits cannot re-charge.
+        before = os.getenv('GITHUB_EVENT_BEFORE', '').strip()
+        after = os.getenv('GITHUB_SHA', '').strip()
+        marker_paths = []
+        if before and after and set(before) != {'0'}:
+            changed = subprocess.check_output(
+                ['git', 'diff', '--diff-filter=A', '--name-only', before, after,
+                 '--', '.narration-requests/'], cwd=ROOT, text=True)
+            marker_paths = changed.splitlines()
+        preflight = any(re.fullmatch(r'\\.narration-requests/preflight-[0-9]+\\.txt', p)
+                        for p in marker_paths)
+        if preflight:
+            if not os.getenv('ELEVENLABS_API_KEY') or not os.getenv('ELEVENLABS_VOICE_ID'):
+                raise RuntimeError('ElevenLabs API key or voice ID missing from GitHub Actions')
+            if not shutil.which('ffmpeg'):
+                raise RuntimeError('ffmpeg missing from GitHub Actions runner')
+            print('PREFLIGHT_CREDENTIALS_AND_FFMPEG_OK')
+            for check_slug in ('danganronpa-trigger-happy-havoc', 'signalis-alatyr'):
+                generate(find_post(check_slug), dry_run=True)
+            print('PREFLIGHT_COMPLETE_NO_CREDITS_USED')
+        approved = []
+        for item in marker_paths:
+            matched = re.fullmatch(r'\\.narration-requests/(danganronpa-trigger-happy-havoc|signalis-alatyr)\\.approved', item)
+            if matched:
+                marker = ROOT / item
+                if marker.read_text(encoding='utf-8').strip() != 'AUTHORIZE_ONE_TIME_ELEVENLABS_GENERATION':
+                    raise ValueError('Unapproved narration marker: ' + item)
+                approved.append(matched.group(1))
+        if len(approved) > 1:
+            raise ValueError('Generate one approved review per commit to control costs')
+        for approved_slug in approved:
+            generate(find_post(approved_slug))
         paths = announce.new_post_paths()
         posts = [p for path in paths if (p := parse_post(path)) is not None]
     if not posts:
