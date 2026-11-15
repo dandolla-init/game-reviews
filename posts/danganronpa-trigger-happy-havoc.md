@@ -11,7 +11,7 @@ cover_fallback: "/assets/cover.svg"
 audio: ""
 narration: manual
 youtube: ""
-published: false
+published: true
 ---
 
 ## Introduction - The Benefit of the Doubt Can Only Go So Far

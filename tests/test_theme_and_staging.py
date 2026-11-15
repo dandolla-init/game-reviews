@@ -20,9 +20,9 @@ class ThemeAndDraftTests(unittest.TestCase):
             self.assertIn('dandolla-theme',page)
         self.assertIn('data-theme="dark"',(ROOT/'assets/styles.css').read_text())
         self.assertIn("localStorage.setItem('dandolla-theme'",(ROOT/'assets/site.js').read_text())
-    def test_danganronpa_draft_stays_hidden(self):
-        self.assertIsNone(build.parse_post(ROOT/'posts/danganronpa-trigger-happy-havoc.md'))
-        self.assertNotIn('danganronpa-trigger-happy-havoc', json.loads((ROOT/'catalogue.json').read_text())['review_order'])
+    def test_danganronpa_is_published_first(self):
+        self.assertIsNotNone(build.parse_post(ROOT/'posts/danganronpa-trigger-happy-havoc.md'))
+        self.assertEqual('danganronpa-trigger-happy-havoc', json.loads((ROOT/'catalogue.json').read_text())['review_order'][0])
 
 if __name__ == '__main__': unittest.main()
 
@@ -32,7 +32,7 @@ class ArticleImportTests(unittest.TestCase):
         self.assertIn('Danganronpa: Trigger Happy Havoc - A Flawed, Red-Pilled Foundation', source)
         self.assertIn('Chapter 6 - Hope, Despair', source)
         self.assertIn('The Ultimate Hope was inside Aoi all along. Literally.', source)
-        self.assertIn('published: false', source)
+        self.assertIn('published: true', source)
         self.assertNotIn('—', source)
         self.assertNotIn('–', source)
     def test_signalis_hyphen_standard(self):
