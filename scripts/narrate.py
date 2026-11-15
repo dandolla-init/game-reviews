@@ -233,6 +233,8 @@ def generate(post, *, force=False, dry_run=False):
     voice_id = os.getenv('ELEVENLABS_VOICE_ID', '').strip()
     if not (api_key and voice_id):
         raise RuntimeError('Set ELEVENLABS_API_KEY (Actions secret) and ELEVENLABS_VOICE_ID (Actions variable) before generating audio')
+    if not api_key.startswith('sk_'):
+        raise RuntimeError('ELEVENLABS_API_KEY must contain the secret API key starting with sk_, not its public key ID')
     if not re.fullmatch(r'[A-Za-z0-9_-]{8,128}', voice_id):
         raise ValueError('ELEVENLABS_VOICE_ID must be an ElevenLabs voice ID, not a URL')
     if not shutil.which('ffmpeg'):
