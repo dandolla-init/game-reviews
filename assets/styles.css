@@ -92,8 +92,9 @@ img { max-width:100%; }
 .toc-sticky a { font-size:.72rem;color:#5b6a87;line-height:1.52; }
 .toc-sticky a:hover { color:#192339;text-decoration:underline; }
 .article-content { min-width:0; }
-.spoiler-notice { display:flex;align-items:flex-start;gap:14px;background:#d7e1f1;border:1px solid #b2c1d9;padding:17px 20px;color:#374862;font-size:.83rem;line-height:1.55;margin-bottom:18px; }
-.spoiler-notice>span:first-child { color:#4a6292;font-size:1.2rem; }
+.spoiler-notice { display:grid;grid-template-columns:20px minmax(0,1fr);align-items:center;gap:12px;background:#d7e1f1;border:1px solid #b2c1d9;padding:17px 20px;color:#374862;font-size:.83rem;line-height:1.55;margin-bottom:18px; }
+.spoiler-notice>span:first-child { display:block;color:#4a6292;font-size:1.2rem;line-height:1;text-align:center; }
+.spoiler-notice>span:last-child { min-width:0; }
 .companion-section { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0 0 48px; }
 .companion-card { background:#f3f5fb;border:1px solid #bac7de;padding:22px 23px 21px;min-width:0; }
 .companion-card h2 { font:400 1.42rem/1.2 Georgia,serif;letter-spacing:-.028em;margin:8px 0; }
