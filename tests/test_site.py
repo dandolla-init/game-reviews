@@ -26,8 +26,9 @@ class SiteTests(unittest.TestCase):
 
     def test_catalogue_manual_order_and_renders(self):
         post = build.parse_post(ROOT / 'posts' / 'signalis-alatyr.md')
-        listing = build.load_catalogue([post])
-        self.assertEqual([x['slug'] for x in listing], ['signalis-alatyr'])
+        dan = build.parse_post(ROOT / 'posts' / 'danganronpa-trigger-happy-havoc.md')
+        listing = build.load_catalogue([post, dan])
+        self.assertEqual([x['slug'] for x in listing], ['danganronpa-trigger-happy-havoc', 'signalis-alatyr'])
         home = build.render_index(listing, json.loads((ROOT / 'site.json').read_text()), '/game-reviews', 'https://example.github.io/game-reviews')
         self.assertIn('home-banner.png', home)
         self.assertIn('Plentiful effort', home)

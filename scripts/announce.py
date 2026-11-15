@@ -60,6 +60,20 @@ def new_post_paths():
             return []
     before, after = published_slugs_at(old), published_slugs_at(new)
     changed = after - before
+    # One-shot announcement markers let an article be announced after a
+    # failed deployment, or later, without replaying announcements on edits.
+    def marker_slugs(commit):
+        if not commit or set(commit) == {'0'}:
+            return set()
+        try:
+            filenames = git('ls-tree', '-r', '--name-only', commit, '--', 'publication-announcements').splitlines()
+        except subprocess.CalledProcessError:
+            return set()
+        return {Path(name).stem for name in filenames
+                if name.startswith('publication-announcements/')
+                and name.endswith('.txt')
+                and re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', Path(name).stem)}
+    changed |= (marker_slugs(new) - marker_slugs(old)) & after
     paths = []
     for file in sorted((ROOT / 'posts').glob('*.md')):
         post = parse_post(file)
