@@ -25,3 +25,22 @@ class ThemeAndDraftTests(unittest.TestCase):
         self.assertNotIn('danganronpa-trigger-happy-havoc', json.loads((ROOT/'catalogue.json').read_text())['review_order'])
 
 if __name__ == '__main__': unittest.main()
+
+class ArticleImportTests(unittest.TestCase):
+    def test_danganronpa_imported_and_staged(self):
+        source = (ROOT/'posts/danganronpa-trigger-happy-havoc.md').read_text(encoding='utf-8')
+        self.assertIn('Danganronpa: Trigger Happy Havoc - A Flawed, Red-Pilled Foundation', source)
+        self.assertIn('Chapter 6 - Hope, Despair', source)
+        self.assertIn('The Ultimate Hope was inside Aoi all along. Literally.', source)
+        self.assertIn('published: false', source)
+        self.assertNotIn('—', source)
+        self.assertNotIn('–', source)
+    def test_signalis_hyphen_standard(self):
+        source = (ROOT/'posts/signalis-alatyr.md').read_text(encoding='utf-8')
+        self.assertNotIn('—', source)
+        self.assertNotIn('–', source)
+        self.assertIn('narration: manual', source)
+    def test_role_default_in_workflow(self):
+        workflow = (ROOT/'.github/workflows/publish.yml').read_text()
+        self.assertIn('884385448410087455', workflow)
+        self.assertIn('DISCORD_ROLE_ID', workflow)

@@ -20,3 +20,7 @@ GitHub → Settings → Secrets and variables → Actions:
 Get the role ID in Discord by enabling Developer Mode (User Settings → Advanced), then go to Server Settings → Roles and copy the ID for `the readers`. The role must be mentionable or the webhook must have appropriate mention permissions. Only this role is allowed to ping. If no role ID is set, announcements are sent without pings. Members' notification settings may suppress push alerts.
 
 To bring an existing Danganronpa review over from Discord, copy its full text into `posts/danganronpa-trigger-happy-havoc.md` below the YAML front matter, replace the draft title/description/cover, and keep `published: false` until the webhook and role are configured. Publish Danganronpa by setting `published: true` and adding its slug to `catalogue.json`, then commit to `main`. A separate later commit can release SIGNALIS. If a notification was missed, use Actions → Publish reviews → Run workflow → `announce_slug` for a one-time announcement.
+
+## November staging notes
+
+The complete Danganronpa review was imported from the author's supplied text and remains unpublished for proofreading. Its prose was not rewritten. The SIGNALIS text has had Unicode long dashes replaced with ordinary ASCII hyphens, and its ElevenLabs mode is set to manual until the final text is approved. The Discord role ID for `@the readers` is set as the fallback in `.github/workflows/publish.yml` (884385448410087455); an Actions variable of `DISCORD_ROLE_ID` overrides it. Configure the webhook secret before posting.

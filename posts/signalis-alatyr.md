@@ -9,7 +9,7 @@ cover_image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps
 cover_alt: "Official SIGNALIS promotional cover art"
 cover_fallback: "/assets/signalis-placeholder.svg"
 audio: "" # Leave blank to let ElevenLabs supply the MP3 automatically
-narration: elevenlabs # Opt in to one-time generation when configured
+narration: manual # Generate with ElevenLabs after final editorial approval
 youtube: "" # When published: https://www.youtube.com/watch?v=YOUR_VIDEO_ID
 # Optional: accent: "#7895c9"
 published: true
@@ -301,7 +301,7 @@ I do not consider its secret ending the most satisfying conclusion. And I am per
 
 Not more canonical. Not necessarily more optimistic. Simply better at concluding the particular story that made me care about the game.
 
-SIGNALIS features three standard endings — Leave, Memory, and Promise — alongside the secret Artifact ending. The developers have stated that these endings are not intended to form a conventional hierarchy of good, bad, and true outcomes.
+SIGNALIS features three standard endings - Leave, Memory, and Promise - alongside the secret Artifact ending. The developers have stated that these endings are not intended to form a conventional hierarchy of good, bad, and true outcomes.
 
 I respect that decision. But artistic intention does not oblige me to find every outcome equally effective.
 
@@ -405,7 +405,7 @@ And perhaps that desire is itself evidence of how successfully SIGNALIS construc
 
 It left me wishing there were more of it.
 
-## Conclusion — Remember Our Promise
+## Conclusion - Remember Our Promise
 
 SIGNALIS is an extraordinary experience, even if I do not entirely agree with its narrative priorities.
 
