@@ -64,7 +64,7 @@ class NarrationTests(unittest.TestCase):
             (cloned / 'posts').mkdir()
             source = (ROOT / 'posts' / 'signalis-alatyr.md').read_text(encoding='utf-8')
             (cloned / 'posts' / 'signalis-alatyr.md').write_text(source, encoding='utf-8')
-            with patch.object(build, 'ROOT', cloned):
+            with patch.object(build, 'ROOT', cloned), patch.object(build, 'validate_local_asset', lambda p: p):
                 post = build.parse_post(cloned / 'posts' / 'signalis-alatyr.md')
                 page = build.render_media(post, '/game-reviews')
             self.assertEqual(post['audio'], '')
