@@ -185,6 +185,7 @@ def page(*, title, description, content, site, url, base, og_image='', article=F
   <script>try{{document.documentElement.dataset.theme=localStorage.getItem('dandolla-theme')==='dark'?'dark':'light';}}catch(e){{document.documentElement.dataset.theme='light';}}</script>
   <link rel="stylesheet" href="{E(base)}/assets/styles.css">
   <link rel="alternate" type="application/rss+xml" href="{E(base)}/feed.xml" title="RSS">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="53ef5c68-a0d7-4829-9424-ab49d790505d" data-exclude-hash="true" data-do-not-track="true"></script>
 </head><body>
   <div class="progress" id="reading-progress" aria-hidden="true"></div>
   <header class="site-header"><div class="container header-inner">
@@ -194,12 +195,13 @@ def page(*, title, description, content, site, url, base, og_image='', article=F
   <main id="main-content">{content}</main>
   <footer class="site-footer"><div class="container footer-inner"><div>{E(site['title'])}<span class="footer-note"> · {E(site['footer_note'])}</span></div><span>© {dt.date.today().year} {E(site['author'])}</span></div></footer>
   <script src="{E(base)}/assets/site.js" defer></script>
+  <script src="{E(base)}/assets/analytics.js" defer></script>
 </body></html>'''
 
 
 def review_item(post, base, index):
     tags = ''.join(f'<span class="tag">{E(t)}</span>' for t in post.get('tags', [])[:3])
-    return f'''<a class="review-item" href="{E(post_url(base, post))}">
+    return f'''<a class="review-item" href="{E(post_url(base, post))}" data-umami-event="review-click" data-umami-event-review="{E(post['slug'])}">
       <div class="review-art">{cover(post, base)}</div>
       <div class="review-copy"><div class="eyebrow">{index:02d} / {E(post['game'])} / {E(post['date_formatted'])}</div>
       <h3>{E(post['title'])}</h3><p>{E(post['description'])}</p>
@@ -243,7 +245,7 @@ def render_media(post, base):
           <h2>Audio narration</h2><p>Hear the review read aloud.</p>
           <audio controls preload="metadata" aria-label="Listen to {E(post['title'])}"><source src="{E(src)}" type="audio/mpeg">Your browser does not support the audio element.</audio></div>'''
     if post['youtube']:
-        video_inner = f'<a class="media-action" href="{E(post["youtube"])}" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>'
+        video_inner = f'<a class="media-action" href="{E(post["youtube"])}" target="_blank" rel="noopener noreferrer" data-umami-event="youtube-click" data-umami-event-review="{E(post['slug'])}">Watch on YouTube <span aria-hidden="true">↗</span></a>'
     else:
         video_inner = '<p class="media-pending">Video essay to follow.</p>'
     return f'''<section class="companion-section" aria-label="Other ways to experience this review">
@@ -255,13 +257,13 @@ def render_media(post, base):
 
 def render_post(post, site, base, site_url, next_post):
     url = post_url(base, post)
-    toc = ''.join(f'<a href="#{E(anchor)}">{E(text)}</a>' for anchor, text in post['toc'])
+    toc = ''.join(f'<a href="#{E(anchor)}" data-umami-event="chapter-click" data-umami-event-review="{E(post["slug"])}" data-umami-event-chapter="{E(anchor)}">{E(text)}</a>' for anchor, text in post['toc'])
     tags = ''.join(f'<span class="tag">{E(t)}</span>' for t in post.get('tags', []))
     next_url = post_url(base, next_post) if next_post else f'{base}/#catalogue'
     next_title = next_post['title'] if next_post else 'Return to the catalogue'
     copy_url = f"{site_url}/reviews/{post['slug']}/" if site_url else url
     accent = f' style="--article-accent:{E(post["accent"])}"' if post['accent'] else ''
-    content = f'''<article class="review-page"{accent}>
+    content = f'''<article class="review-page" data-review-slug="{E(post['slug'])}"{accent}>
       <section class="article-masthead"><div class="container article-masthead-inner">
         <div class="article-intro"><a class="back-link" href="{E(base)}/#catalogue">← All reviews</a>
           <div class="eyebrow article-category">{E(post['game'])} / WRITTEN REVIEW / FULL SPOILERS</div>
@@ -274,8 +276,8 @@ def render_post(post, site, base, site_url, next_post):
         <div class="article-content"><div class="spoiler-notice"><span aria-hidden="true">◇</span><span><strong>Full spoilers ahead.</strong> The story, characters, and endings are discussed openly.</span></div>
           {render_media(post, base)}
           <div class="prose">{post['html']}</div>
-          <div class="article-outro"><div class="tags">{tags}</div><div class="share-row"><span>Share this review</span><button class="copy-link" type="button" data-copy-link="{E(copy_url)}">Copy link ↗</button></div></div>
-          <a class="next-card" href="{E(next_url)}"><span class="eyebrow">KEEP READING</span><strong>{E(next_title)}</strong><span>Explore ↗</span></a>
+          <div class="article-outro"><div class="tags">{tags}</div><div class="share-row"><span>Share this review</span><button class="copy-link" type="button" data-copy-link="{E(copy_url)}" data-umami-event="share-click" data-umami-event-review="{E(post['slug'])}">Copy link ↗</button></div></div>
+          <a class="next-card" href="{E(next_url)}" data-umami-event="next-review-click" data-umami-event-review="{E(post['slug'])}" data-umami-event-destination="{E(next_post['slug'] if next_post else 'catalogue')}"><span class="eyebrow">KEEP READING</span><strong>{E(next_title)}</strong><span>Explore ↗</span></a>
         </div></div></article>'''
     cover_url = media_src(post['cover_image'], base)
     og_image = cover_url if cover_url.startswith('http') else (f'{urlparse(site_url).scheme}://{urlparse(site_url).netloc}{cover_url}' if site_url else '')
